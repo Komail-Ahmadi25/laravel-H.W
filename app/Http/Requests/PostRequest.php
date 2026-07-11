@@ -24,15 +24,14 @@ class PostRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'title" => "required|string|min:2|max:255',
+            "title" => "required|string|min:2",
             "body" => "required|string|min:15",
         ];
     }
-    #[Override]
     public function messages()
     {
         return [
-            "titel.required" => "Please add the title of post",
+            "titel.required" => "Plessase add the title of post",
             "titel.min" => "The titel of post must be 6 characters",
             "body.required" => "Please add the descriptions of the post"
         ];

@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use Exception;
+
 use App\Http\Requests\PostRequest;
 use Illuminate\Support\Facades\Gate;
 use App\Models\Post;
-use Exception;
+// use Exception;
 // use Illuminate\Auth\Access\Gate as AccessGate;
 use Illuminate\Http\Request;
 
@@ -31,16 +33,21 @@ class PostController extends Controller
     /**
      * Store a newly created resource in storage.
      */
+
     public function store(PostRequest $request)
     {
         try {
+            // Retrieve the validated input data from PostRequest
+            $validated = $request->validated();
+
             Post::create([
-                'title' => $request->title,
-                'body' => $request->body
+                'title' => $validated['title'],
+                'body' => $validated['body']
             ]);
+
             return redirect('/posts');
         } catch (Exception $err) {
-            echo $err->getMessage();
+            return redirect('/posts')->with('success', 'Post created successfully!');
         }
     }
 
