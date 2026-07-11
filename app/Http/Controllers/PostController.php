@@ -38,7 +38,7 @@ class PostController extends Controller
                 'title' => $request->title,
                 'body' => $request->body
             ]);
-            return redirect()->route('posts');
+            return redirect('/posts');
         } catch (Exception $err) {
             echo $err->getMessage();
         }

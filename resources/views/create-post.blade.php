@@ -11,19 +11,24 @@
 <body>
     <div class="w-full bg-stone-200 h-screen flex justify-center items-center">
         <div class="w-1/2 bg-white/80 backdrop-blur-md rounded-md p-4 border">
-            <h1 class="text-center text-4xl font-semibold">Create Post</h1>
-            @if ($errors->any()>0)
-            <div class="w-full flex flex-col gap-1">
-                @foreach ($errors->all() as $error)
-                <p class="text-red-500 text-sm">{{ $error }}</p>
-                @endforeach
-            </div>
-            @endif
-            <form action="{{URL('store-post')}}" method="post" class="flex flex-col gap-1 items-center">
+            <h1 class="text-center text-4xl font-semibold mb-4">Create Post</h1>
+
+            <form action="{{URL('store-post')}}" method="post" class="flex flex-col gap-4 items-center">
                 @csrf
-                <input type="text" name="title" placeholder="Write the post title" class="w-full rounded-md py-2 border focus:outline-none">
-                <textarea name="body" class="w-full rounded-md h-72 border focus:outline-0" id="" placeholder="Write the post description"></textarea>
-                <button type="submit" class="w-full py-2.5 rounded-md px-8 bg-blue-500 text-white ">Save</button>
+                <div class="w-full flex flex-col gap-1">
+                    <input type="text" value="{{old('title')}}" name="title" placeholder="Write the post title" class="w-full rounded-md py-2 border focus:outline-none px-3">
+                    @error('title')
+                    <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+                    @enderror
+                </div>
+                <div class="w-full flex flex-col gap-1">
+                    <textarea name="body" class="w-full rounded-md h-72 border focus:outline-0 p-3" placeholder="Write the post description">{{ old('body') }}</textarea>
+                    @error('body')
+                    <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+                    @enderror
+                </div>
+
+                <button type="submit" class="w-full py-2.5 rounded-md px-8 bg-blue-500 text-white font-medium hover:bg-blue-600 transition">Save</button>
             </form>
         </div>
     </div>

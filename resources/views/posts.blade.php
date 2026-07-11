@@ -12,7 +12,7 @@
     <div class="w-full min-h-screen bg-stone-100">
         <div class="w-full max-w-7xl mx-auto p-4">
             <div>
-                <form action="{{ route('posts.index') }}" class="w-full" method="get">
+                <form action="{{ URL('/posts') }}" class="w-full" method="get">
                     <input type="text" placeholder="Search the posts..." value="{{ request('search') }}" name="search" class="w-full py-2">
                     <!-- <button type="submit" class="py-2 px-5 bg-blue-700 text-white">Search</button> -->
                 </form>
