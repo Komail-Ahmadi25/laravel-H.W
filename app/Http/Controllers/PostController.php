@@ -10,7 +10,7 @@ use App\Models\Post;
 // use Exception;
 // use Illuminate\Auth\Access\Gate as AccessGate;
 use Illuminate\Http\Request;
-
+use Illuminate\Support\Facades\Storage;
 
 class PostController extends Controller
 {
@@ -40,20 +40,21 @@ class PostController extends Controller
             // Retrieve the validated input data from PostRequest
             $validated = $request->validated();
 
-            Post::create([
+            $post = Post::create([
                 'title' => $validated['title'],
                 'body' => $validated['body']
             ]);
-            $imagepath1 = null;
-            $imagepath2 = null;
+
             if ($request->hasFile('image1') && $request->hasFile('image2')) {
-                $imagepath1 = $request->file('image1')->store("images", "public");
-                $imagepath2 = $request->file('image2')->store("images", "public");
-                $post->images()->creatMany([
-                    ["path" => imagepath1],
-                    ["path" => imagepath2],
+                $imagepath1 = $request->file('image1')->store('images', 'public');
+                $imagepath2 = $request->file('image2')->store('images', 'public');
+
+                $post->images()->createMany([
+                    ['path' => $imagepath1],
+                    ['path' => $imagepath2],
                 ]);
             }
+
             return redirect('/posts');
         } catch (Exception $err) {
             return redirect('/posts')->with('success', 'Post created successfully!');
@@ -89,6 +90,14 @@ class PostController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $post = Post::findOrFail($id);
+        if (count($post->images) > 0) {
+            foreach ($post->images as $image) {
+                Storage::disk('public')->delete($image->path);
+                Image::findOrFail($image->id)->delete();
+            }
+        }
+        $post->delete();
+        return redirect()->back();
     }
 }

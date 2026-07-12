@@ -32,7 +32,7 @@
                     </td>
                     @endforeach
                     <td>
-                        <form action="" method="post" onsubmit="return confirm('Are you sure you want to delete this post?')">
+                        <form action="{{ URL('delete', $post->id) }}" method="post" onsubmit="return confirm('Are you sure you want to delete this post?')">
                             @csrf
                             <button type="submit" class="py-2 px-5 bg-red-500 text-white rounded-md">Delete</button>
                         </form>

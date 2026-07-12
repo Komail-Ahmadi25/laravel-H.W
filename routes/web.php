@@ -22,4 +22,5 @@ Route::middleware('auth')->group(function () {
 Route::view('create-post', 'create-post');
 // Route::post('store-post', [PostController::class, 'create']);
 Route::post('/store-post', [PostController::class, 'store']);
+Route::delete('/delete-post/{id}', [PostController::class, 'destroy']);
 require __DIR__ . '/auth.php';
