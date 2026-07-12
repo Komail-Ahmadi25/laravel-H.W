@@ -19,7 +19,7 @@ class PostController extends Controller
      */
     public function index()
     {
-        $posts = Post::when(request('search'), function ($query) {
+        $posts = Post::with('images')->when(request('search'), function ($query) {
             $query->where('title', 'LIKE', '%' . request('search') . '%');
         })->paginate(10);
         return view('posts', compact('posts'));

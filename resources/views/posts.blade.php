@@ -23,6 +23,20 @@
                     <th class="border py-2 text-center">ID</th>
                     <th class="border py-2 text-center">Post title</th>
                     <th class="border py-2 text-center">Post descriptions</th>
+                    <th class="border py-2 text-center">Image 1</th>
+                    <th class="border py-2 text-center">Image 2</th>
+                    <th class="border py-2 text-center">Delete</th>
+                    @foreach ($posts as $post)
+                    <td class="border py-2  text-center">
+                        <img src="{{ 'storage/' . $image->path }}" alt="" class="w-20 h-20 object-cover">
+                    </td>
+                    @endforeach
+                    <td>
+                        <form action="" method="post" onsubmit="return confirm('Are you sure you want to delete this post?')">
+                            @csrf
+                            <button type="submit" class="py-2 px-5 bg-red-500 text-white rounded-md">Delete</button>
+                        </form>
+                    </td>
                 </tr>
                 @foreach ($posts as $post)
                 <tr>
@@ -43,7 +57,7 @@
                 ->appends(request()->query())->
                 links() }}
             </div>
-            @endif ()
+            @endif
         </div>
     </div>
 </body>
