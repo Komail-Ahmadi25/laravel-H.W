@@ -44,7 +44,16 @@ class PostController extends Controller
                 'title' => $validated['title'],
                 'body' => $validated['body']
             ]);
-
+            $imagepath1 = null;
+            $imagepath2 = null;
+            if ($request->hasFile('image1') && $request->hasFile('image2')) {
+                $imagepath1 = $request->file('image1')->store("images", "public");
+                $imagepath2 = $request->file('image2')->store("images", "public");
+                $post->images()->creatMany([
+                    ["path" => imagepath1],
+                    ["path" => imagepath2],
+                ]);
+            }
             return redirect('/posts');
         } catch (Exception $err) {
             return redirect('/posts')->with('success', 'Post created successfully!');
