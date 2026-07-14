@@ -12,7 +12,7 @@
     <div class="w-full bg-stone-200 h-screen flex justify-center items-center">
         <div class="w-1/2 bg-white/80 backdrop-blur-md rounded-md p-4 border">
             <h1 class="text-center text-4xl font-semibold mb-4">Create Post</h1>
-            <form enctype="multipart/form-data" action="{{ URL('store-post') }}" method="post" class="flex flex-col gap-2 items-center">
+            <form enctype="multipart/form-data" action="{{ URL('/store-post') }}" method="post" class="flex flex-col gap-2 items-center">
                 @csrf
                 <div class="w-full flex flex-col gap-1">
                     <input type="text" value="{{old('title')}}" name="title" placeholder="Write the post title" class="w-full rounded-md py-2 border focus:outline-none px-3">

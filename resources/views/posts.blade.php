@@ -26,16 +26,9 @@
                     <th class="border py-2 text-center">Image 1</th>
                     <th class="border py-2 text-center">Image 2</th>
                     <th class="border py-2 text-center">Delete</th>
-                    @foreach ($posts as $post)
-                    <td class="border py-2  text-center">
-                        <img src="{{ 'storage/' . $image->path }}" alt="" class="w-20 h-20 object-cover">
-                    </td>
-                    @endforeach
+
                     <td>
-                        <form action="{{ URL('delete', $post->id) }}" method="post" onsubmit="return confirm('Are you sure you want to delete this post?')">
-                            @csrf
-                            <button type="submit" class="py-2 px-5 bg-red-500 text-white rounded-md">Delete</button>
-                        </form>
+
                     </td>
                 </tr>
                 @foreach ($posts as $post)
@@ -43,6 +36,12 @@
                     <td class="border py-2  text-center">{{$post->id}}</td>
                     <td class="border py-2  text-center">{{$post->title}}</td>
                     <td class="border py-2  text-center">{{$post->body}}</td>
+                    @foreach ($post->images as $image)
+                    <td class="border py-2  text-center">
+                        <img src="{{ 'storage/' . $image->path }}" alt="" class="w-20 h-20 object-cover">
+                    </td>
+                    @endforeach
+
                     @can('update', $post)
                     <td class="border py-2"><a href="{{ 'post-edit/'.$post->id }}" class="py-2 px-5 bg-blue-500 text-white rounded-md">Update</a></td>
                     @endcan
@@ -54,7 +53,7 @@
             </table>
             <div class="flex w-full justify-center gap-2">
                 {{ $posts
-                ->appends(request()->query())->
+                ->
                 links() }}
             </div>
             @endif

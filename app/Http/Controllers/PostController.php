@@ -34,16 +34,17 @@ class PostController extends Controller
      * Store a newly created resource in storage.
      */
 
-    public function store(PostRequest $request)
+    public function store(Request $request)
     {
         try {
             // Retrieve the validated input data from PostRequest
-            $validated = $request->validated();
+
 
             $post = Post::create([
-                'title' => $validated['title'],
-                'body' => $validated['body']
+                'title' => $request->title,
+                'body' => $request->body
             ]);
+            $post->save();
 
             if ($request->hasFile('image1') && $request->hasFile('image2')) {
                 $imagepath1 = $request->file('image1')->store('images', 'public');
@@ -57,7 +58,7 @@ class PostController extends Controller
 
             return redirect('/posts');
         } catch (Exception $err) {
-            return redirect('/posts')->with('success', 'Post created successfully!');
+            echo "something went wrong";
         }
     }
 
